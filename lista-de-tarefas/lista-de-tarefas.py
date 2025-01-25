@@ -1,11 +1,41 @@
-def adicionar_tarefa(tarefas, titulo='Nao informado'):
+def adicionar_tarefa(tarefas):
+  titulo = input('Informe o nome da tarefa: ')
   tarefa = {
     "nome": titulo,
-    "concluida": True
+    "concluida": False
   }
   tarefas.append(tarefa)
-  print(f'Tarefa -{titulo}- adicionada')
+  print(f'Tarefa --{titulo}-- adicionada')
   return
+
+def exibir_tarefas(tarefas):
+  for tarefa in tarefas:
+    if tarefa["concluida"] == False:
+      print(f'[ ] - {tarefa["nome"]}')
+    else:
+      print(f'[x] - {tarefa["nome"]}')
+  return
+
+def atualizar_tarefa(tarefas):
+  exibir_tarefas(tarefas)
+  escolha_atualizar = int(input('Qual tarefa você deseja atualizar: '))
+  novo_titulo = input('Qual o novo nome da sua tarefa: ')
+  tarefas[escolha_atualizar - 1]["nome"] = novo_titulo
+  return
+
+def concluir_tarefa(tarefas):
+  exibir_tarefas(tarefas)
+  escolha_concluir = int(input('Qual tarefa você concluiu: '))
+  tarefas[escolha_concluir - 1]["concluida"] = True
+  print(f'Tarefa {tarefas[escolha_concluir - 1]["nome"]} concluida!')
+  return
+
+def apagar_concluidas(tarefas):
+  for tarefa in tarefas:
+    if tarefa["concluida"]:
+      tarefas.remove(tarefa)
+  return
+
 
 tarefas = [] # Iniciando a lista de tarefas
 
@@ -14,26 +44,30 @@ while True:
   print('1. Adicionar tarefa')
   print('2. Ver tarefas')
   print('3. Atualizar tarefa')
-  print('4. Completar tarefa')
+  print('4. Concluir tarefa')
   print('5. Deletar tarefas concluidas')
   print('6. Sair')
 
   escolha = int(input('Digite a sua escolha: '))
 
   if escolha == 1:
-    titulo = input('Informe o nome da tarefa: ')
-    adicionar_tarefa(tarefas, titulo)
+    adicionar_tarefa(tarefas)
 
   elif escolha == 2:
-    for tarefa in tarefas:
-      print(f'[ ]' if tarefa["concluida"] == False else '[x]', end=' - ')
-      print(tarefa["nome"])
+    exibir_tarefas(tarefas)
   
   elif escolha == 3:
-    break
+    atualizar_tarefa(tarefas)
+
+  elif escolha == 4:
+    concluir_tarefa(tarefas)
+
+  elif escolha == 5:
+    apagar_concluidas(tarefas)
+    exibir_tarefas(tarefas)
 
   elif escolha == 6:
     break
 
-  else: # Opão que não está no programa
+  else: # Opção que não está no programa
     print('Escolha uma opção válida!')
