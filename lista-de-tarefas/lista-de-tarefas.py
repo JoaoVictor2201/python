@@ -10,7 +10,7 @@ def adicionar_tarefa(tarefas):
 
 def exibir_tarefas(tarefas):
   for tarefa in tarefas:
-    if tarefa["concluida"] == False:
+    if not tarefa["concluida"]:
       print(f'[ ] - {tarefa["nome"]}')
     else:
       print(f'[x] - {tarefa["nome"]}')
